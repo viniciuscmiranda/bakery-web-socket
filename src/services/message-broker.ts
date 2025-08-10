@@ -1,21 +1,32 @@
 import { Logger } from "../utils/logger";
 
+const logger = new Logger("✉️  MessageBroker");
+
 type Subscriber = (message: Message) => void;
+
+export type Message = {
+  message: string;
+  type: "message" | "error";
+  timestamp: string;
+};
 
 export class MessageBrokerClass {
   private messages: Message[] = [];
   private subscribers: Set<Subscriber> = new Set();
-  private logger: Logger;
 
-  constructor() {
-    this.logger = new Logger("✉️  MessageBroker");
-  }
+  public send(message: string) {
+    const messageObject: Message = {
+      message,
+      type: "message",
+      timestamp: new Date().toISOString(),
+    };
 
-  public send(message: Message) {
-    this.logger.log(`Sending message: "${message.message}"`);
+    logger.log(`Enviando mensagem: "${message}"`);
 
-    this.messages.unshift(message);
-    this.subscribers.forEach((subscriber) => subscriber(message));
+    this.messages.unshift(messageObject);
+    this.subscribers.forEach((subscriber) => subscriber(messageObject));
+
+    return messageObject;
   }
 
   public getMessages() {
@@ -28,26 +39,6 @@ export class MessageBrokerClass {
 
   public unsubscribe(subscriber: Subscriber) {
     this.subscribers.delete(subscriber);
-  }
-}
-
-export class Message {
-  public timestamp: string;
-
-  constructor(public type: "message" | "error", public message: string) {
-    this.timestamp = new Date().toISOString();
-  }
-
-  public toJSON() {
-    return {
-      type: this.type,
-      message: this.message,
-      timestamp: this.timestamp,
-    };
-  }
-
-  public toString() {
-    return JSON.stringify(this.toJSON());
   }
 }
 

@@ -1,26 +1,15 @@
 {
   "name": "bakery-web-socket",
-  "version": "1.0.0",
-  "main": "dist/main.js",
   "scripts": {
-    "dev": "tsx watch src/main.ts",
-    "build": "tsc",
-    "start": "node dist/main.js"
+    "start": "tsx watch src/main.ts"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
   "dependencies": {
-    "dotenv": "^17.2.1",
     "express": "^5.1.0",
-    "jsonwebtoken": "^9.0.2",
     "ws": "^8.18.3",
     "zod": "^4.0.15"
   },
   "devDependencies": {
     "@types/express": "^5.0.3",
-    "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^20.10.5",
     "@types/ws": "^8.18.1",
     "tsx": "^4.6.2",
