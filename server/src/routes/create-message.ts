@@ -10,6 +10,6 @@ export function createMessage(req: Request, res: Response) {
     return res.status(400).json({ error: error.message });
   }
 
-  const messageObject = MessageBroker.send(data.message);
+  const messageObject = MessageBroker.send(data.message, req.body.clientId);
   return res.json(messageObject);
 }

@@ -6,8 +6,6 @@ import { generateId } from "../utils/generate-id";
 export const getMessagesServerSentEvents = (req: Request, res: Response) => {
   const id = generateId("sse");
 
-  MessageBroker.send(`Cliente "${id}" se conectou ao servidor.`);
-
   // Configurar headers para SSE
   res.writeHead(200, {
     "Content-Type": "text/event-stream",
@@ -26,6 +24,7 @@ export const getMessagesServerSentEvents = (req: Request, res: Response) => {
 
   // Subscribe para receber mensagens
   MessageBroker.subscribe(messageHandler);
+  MessageBroker.send(`Cliente "${id}" se conectou ao servidor.`);
 
   // Limpar quando a conexão for fechada
   req.on("close", closeConnection);

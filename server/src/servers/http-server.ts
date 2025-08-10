@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";
 
 import { Logger } from "../utils/logger";
 
@@ -17,39 +18,25 @@ export class HttpServer {
   constructor(private port: number) {
     this.server = express();
     this.server.use(express.json());
+    this.server.use(cors());
 
-    this.initLogger();
-    this.initRoutes();
-  }
-
-  public listen() {
-    this.server.listen(this.port, () => {
-      logger.log(`Servidor iniciado na porta ${this.port}...`);
+    this.server.use((req, _res, next) => {
+      logger.log(`${req.method} ${req.path} - Nova requisição`);
+      next();
     });
-  }
 
-  private initRoutes() {
+    this.server.post("/messages", createMessage);
     this.server.get("/messages", getMessages);
     this.server.get("/messages/long-polling", getMessagesLongPolling);
     this.server.get(
       "/messages/server-sent-events",
       getMessagesServerSentEvents
     );
-
-    this.server.post("/messages", createMessage);
   }
 
-  private initLogger() {
-    this.server.use((req, res, next) => {
-      logger.log(`${req.method} ${req.path} - Nova requisição`);
-
-      res.on("finish", () => {
-        logger.log(
-          `${req.method} ${req.path} [${res.statusCode}] - Resposta enviada`
-        );
-      });
-
-      next();
+  public listen() {
+    this.server.listen(this.port, () => {
+      logger.log(`Servidor iniciado na porta ${this.port}...`);
     });
   }
 }

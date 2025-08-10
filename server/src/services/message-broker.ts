@@ -8,22 +8,24 @@ export type Message = {
   message: string;
   type: "message" | "error";
   timestamp: string;
+  clientId: string;
 };
 
 export class MessageBrokerClass {
   private messages: Message[] = [];
   private subscribers: Set<Subscriber> = new Set();
 
-  public send(message: string) {
+  public send(message: string, clientId: string = "server") {
     const messageObject: Message = {
       message,
       type: "message",
       timestamp: new Date().toISOString(),
+      clientId,
     };
 
     logger.log(`Enviando mensagem: "${message}"`);
 
-    this.messages.unshift(messageObject);
+    this.messages.push(messageObject);
     this.subscribers.forEach((subscriber) => subscriber(messageObject));
 
     return messageObject;
