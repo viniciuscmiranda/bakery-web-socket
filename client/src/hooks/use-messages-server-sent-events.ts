@@ -4,11 +4,8 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { api } from "../lib/api";
 import type { Message } from "../types/message";
 
-const DISCONNECT_TIMEOUT = 1_000; // 1 segundo
-
 export const useMessagesServerSentEvents = () => {
   const eventSourceRef = useRef<EventSource | null>(null);
-  const disconnectTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const queryClient = useQueryClient();
 
   const [isConnected, setIsConnected] = useState(false);
@@ -24,11 +21,6 @@ export const useMessagesServerSentEvents = () => {
   });
 
   useEffect(() => {
-    if (disconnectTimeoutRef.current) {
-      clearTimeout(disconnectTimeoutRef.current);
-      disconnectTimeoutRef.current = null;
-    }
-
     // Retorna evitando criar uma nova conexão se já existir uma
     if (eventSourceRef.current) return;
 
@@ -61,17 +53,11 @@ export const useMessagesServerSentEvents = () => {
     });
 
     return () => {
-      if (disconnectTimeoutRef.current) {
-        clearTimeout(disconnectTimeoutRef.current);
+      if (eventSourceRef.current) {
+        eventSourceRef.current.close();
+        eventSourceRef.current = null;
+        setIsConnected(false);
       }
-
-      disconnectTimeoutRef.current = setTimeout(() => {
-        if (eventSourceRef.current) {
-          eventSourceRef.current.close();
-          eventSourceRef.current = null;
-          setIsConnected(false);
-        }
-      }, DISCONNECT_TIMEOUT);
     };
   }, [queryClient]);
 

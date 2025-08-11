@@ -1,71 +1,108 @@
 .container {
-    position: fixed;
-    height: 90vh;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    width: 80vw;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+  position: fixed;
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 80vw;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .warnings {
-    display: flex;
-    gap: 0.5rem;
+  display: flex;
+  gap: 0.5rem;
 }
-
 
 .warning {
-    color: #fff;
-    font-weight: 500;
-    font-size: 0.75rem;
-    text-align: center;
-    background-color: var(--primary-color);
-    padding: 0.5rem;
-    border: 2px solid var(--background-color);
-    z-index: 100;
-    width: max-content;
+  color: #fff;
+  font-weight: 500;
+  font-size: 0.75rem;
+  text-align: center;
+  background-color: var(--primary-color);
+  padding: 0.5rem;
+  border: 2px solid var(--background-color);
+  z-index: 100;
+  width: max-content;
 }
-
 
 .addon {
-    margin-left: auto;
+  margin-left: auto;
 }
-
 
 .messages {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    overflow: hidden;
-    background-color: var(--primary-color);
-    padding: 1rem;
-    overflow-y: auto;
-    border: 2px solid var(--background-color);
+  flex: 1;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  overflow: hidden;
+  background-color: var(--primary-color);
+  padding: 1rem;
+  overflow-y: auto;
+  border: 2px solid var(--background-color);
 
-     /* custom scrollbar */
-     &::-webkit-scrollbar {
-        width: 0.25rem;
-    }
-    &::-webkit-scrollbar-track {
-        background: var(--primary-color);
-    }
-    &::-webkit-scrollbar-thumb {
-        background: var(--background-color);
-        cursor: grab;
-    }
+  /* custom scrollbar */
+  &::-webkit-scrollbar {
+    width: 0.25rem;
+  }
+  &::-webkit-scrollbar-track {
+    background: var(--primary-color);
+  }
+  &::-webkit-scrollbar-thumb {
+    background: var(--background-color);
+    cursor: grab;
+  }
 }
 
-
 .message {
-    border: 2px solid var(--background-color);
-    padding: 1rem;
-    display: flex;
-    flex-direction: column;
-    color: #fff;
-    font-weight: bold;
+  border: 2px solid var(--background-color);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  color: #fff;
+  font-weight: bold;
+}
+
+.serverMessagesToggle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  position: sticky;
+  right: 0;
+  width: max-content;
+  background-color: var(--primary-color);
+  padding: 0.5rem;
+  border: 2px solid var(--background-color);
+  z-index: 100;
+  color: #fff;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.serverMessagesToggle:hover {
+  background-color: var(--background-color);
+  color: var(--primary-color);
+}
+
+.serverMessagesToggle > input {
+  width: 1rem;
+  height: 1rem;
+}
+
+.serverMessagesToggle > span {
+  font-size: 0.75rem;
+}
+
+.serverMessage {
+  color: #fff;
+  display: flex;
+  opacity: 0.8;
+}
+
+.serverMessage > p {
+  font-size: 0.75rem;
 }
 
 .footer {
@@ -73,54 +110,53 @@
   align-items: center;
   gap: 0.25rem;
   font-weight: normal;
-
 }
 
 .footer > * {
-    opacity: 0.8;
-    font-size: 0.75rem;
+  opacity: 0.8;
+  font-size: 0.75rem;
 }
 
 .form {
-    display: flex;
-    gap: 0.5rem;
-    width: 100%;
-    padding: 1rem;
-    border: 2px solid var(--background-color);
-    z-index: 100;
+  display: flex;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 1rem;
+  border: 2px solid var(--background-color);
+  z-index: 100;
 }
 
 .form > input {
-    flex: 1;
-    padding: 0.5rem;
-    border: 2px solid var(--background-color);
-    background-color: transparent;
-    color: #fff;
-    font-size: 0.75rem;
-    outline: none;
+  flex: 1;
+  padding: 0.5rem;
+  border: 2px solid var(--background-color);
+  background-color: transparent;
+  color: #fff;
+  font-size: 0.75rem;
+  outline: none;
 
-    &::placeholder {
-        color: #fff;
-        opacity: 0.5;
-    }
+  &::placeholder {
+    color: #fff;
+    opacity: 0.5;
+  }
 }
 
 .form > button {
-    padding: 0.5rem;
-    border: 2px solid var(--background-color);
-    background-color: transparent;
-    color: #fff;
-    font-size: 0.75rem;
-    outline: none;
-    cursor: pointer;
+  padding: 0.5rem;
+  border: 2px solid var(--background-color);
+  background-color: transparent;
+  color: #fff;
+  font-size: 0.75rem;
+  outline: none;
+  cursor: pointer;
 }
 
 .form > button:hover:not(:disabled) {
-    background-color: var(--background-color);
-    color: var(--primary-color);
+  background-color: var(--background-color);
+  color: var(--primary-color);
 }
 
 .form > button:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
+  opacity: 0.5;
+  cursor: not-allowed;
 }
